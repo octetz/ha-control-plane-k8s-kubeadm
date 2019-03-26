@@ -1,14 +1,14 @@
 # Highly Available Control Plane with kubeadm 1.14+
 
-Kubernetes 1.14 introduced an [ALPHA](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#kubeadm-maturity) feature for dynamically adding master nodes to a cluster without the need to copy certificates and keys among nodes. This sought after feature enables a highly available control plane without the need for additional automation. In this post we will dive into how it works and an example usage.
+Kubernetes 1.14 introduced an [ALPHA](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#kubeadm-maturity) feature for dynamically adding master nodes to a cluster. This prevents the need to copy certificates and keys among nodes preventing additional orchestration and complexity in the bootstrapping process. In this post we will dive into how it works.
 
-## How it works
+## How It Works
 
-`kubeadm init` initializes a Kubernetes cluster by standing up a single master. After running the command, you roughly end up with the following.
+`kubeadm init` initializes a Kubernetes cluster by standing up a single master. After running the command, you end up with the following.
 
 <img src="img/master.png" width="400">
 
-> This represents the default. Through additional configuration, `kubeadm init` can behave differently, such as use an existing etcd cluster.
+> This represents the default. Through additional configuration, `kubeadm init` can behave differently, such as reusing an existing etcd cluster.
 
 Conventionally, after installing a CNI plugin, users copy PKI information across 2 more master nodes and run a `kubeadm` command to add new control plane nodes. This results in a 3 node control plane.
 
@@ -32,7 +32,7 @@ kubeadm init --experimental-upload-certs
 
 When the kubeadm token expires, so does the `kubeadm-certs` secret. Also, whenever the `init phase upload-certs` is run, a new encryption key is created. Ensuring that if `kube-apiserver` is compromised during the adding of a master node, the secret is encrypted and meaningless to the attacker. This example demonstrates running `--experimental-upload-certs` during cluster bootstrap. It is also possible to tap into phases, using `kubeadm init phase upload-certs` to achieve the above on an existing master. This will be detailed in the walkthrough below.
 
-Lastly, it is important to note the token generated during `upload-certs` is only a proxy used to bind a ttl to the `kubeadm-cert` secret. You still need a conventional `kubeadm` token to join a control plane. This is the same token you would need to join a worker.
+Lastly, it is important to note the token generated during `upload-certs` is only a proxy used to bind a TTL to the `kubeadm-cert` secret. You still need a conventional `kubeadm` token to join a control plane. This is the same token you would need to join a worker.
 
 To add another control plane (master) node, a user can run the following command.
 
@@ -43,9 +43,10 @@ kubeadm kubeadm join ${API_SERVER_PROXY_IP}:${API_SERVER_PROXY_PORT} \
     --token ${KUBEADM_TOKEN} \
     --discovery-token-ca-cert-hash ${APISERVER_CA_CERT_HASH}
 ```
-Run this on 1 more node and you now have 3-node highly-available control plane!
 
 ## Walkthrough: Creating the HA Control Plane
+
+This walkthrough will guide you to creating a new Kubernetes cluster with a 3 node control plane. It will demonstrate joining a control plane right after bootstrap and also how to add another control plane after the bootstrap tokens have expired.
 
 1. Create 4 hosts (vms, baremetal, etc).
 
@@ -383,4 +384,12 @@ This section joins the third and final master. However, we will first delete all
     output:
 
     ```
+    NAME              STATUS   ROLES    AGE     VERSION
+    192-168-122-160   Ready    master   50m     v1.14.0
+    192-168-122-161   Ready    master   28m     v1.14.0
+    192-168-122-162   Ready    master   3m30s   v1.14.0
     ```
+
+## Summary
+
+I hope you found this post helpful in understanding HA bootstrapping with kubeadm. Checkout the [KEP](https://github.com/kubernetes/enhancements/blob/master/keps/sig-cluster-lifecycle/20190122-Certificates-copy-for-kubeadm-join--control-plane.md) and [documentation](https://kubernetes.io/docs/setup/independent/high-availability) for more features and configuration. At the time of this writing it appears its targeting beta in 1.15. I am really looking forward to the hardening of this feature and perhaps what it can mean for installation methods such as `kubespray` and Cluster API. Special thanks to everyone in sig-cluster-lifecycle who developed, reviewed, and documented this awesome feature.
