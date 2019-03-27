@@ -266,7 +266,7 @@ In this section, we'll run a simple NGINX load balancer to provide a single endp
 
 1. SSH to the `master1` host.
 
-2. Run the recording join command from the previous section.
+2. Run the recorded join command from the previous section.
 
     ```
     kubeadm join 192.168.122.170:6443 --token nmiqmn.yls76lcyxg2wt36c \
@@ -393,4 +393,4 @@ This section joins the third and final master. However, we will first delete all
 
 ## Summary
 
-I hope you found this post helpful in understanding HA bootstrapping with kubeadm. Checkout the [KEP](https://github.com/kubernetes/enhancements/blob/master/keps/sig-cluster-lifecycle/20190122-Certificates-copy-for-kubeadm-join--control-plane.md) and [documentation](https://kubernetes.io/docs/setup/independent/high-availability) for more features and configuration. At the time of this writing it appears its targeting beta in 1.15. I am really looking forward to the hardening of this feature and perhaps what it can mean for installation methods such as `kubespray` and Cluster API. Special thanks to everyone in sig-cluster-lifecycle who developed, reviewed, and documented this awesome feature.
+I hope you found this post helpful in understanding HA bootstrapping with kubeadm. Checkout the [KEP](https://github.com/kubernetes/enhancements/blob/master/keps/sig-cluster-lifecycle/20190122-Certificates-copy-for-kubeadm-join--control-plane.md) and [documentation](https://kubernetes.io/docs/setup/independent/high-availability) for more features and configuration. I am really looking forward to the hardening of this feature and perhaps what it can mean for installation methods such as `kubespray` and Cluster API. Special thanks to everyone in sig-cluster-lifecycle who developed, reviewed, and documented this awesome feature.
