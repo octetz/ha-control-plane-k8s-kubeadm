@@ -1,6 +1,8 @@
 # Highly Available Control Plane with kubeadm 1.14+
 
-Kubernetes 1.14 introduced an [ALPHA](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#kubeadm-maturity) feature for dynamically adding master nodes to a cluster. This prevents the need to copy certificates and keys among nodes preventing additional orchestration and complexity in the bootstrapping process. In this post we will dive into how it works.
+Kubernetes 1.14 introduced an [ALPHA](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#kubeadm-maturity) feature for dynamically adding master nodes to a cluster. This prevents the need to copy certificates and keys among nodes relieving additional orchestration and complexity in the bootstrapping process. In this post we will dive into how it works.
+
+<iframe width="800" height="450" src="https://www.youtube.com/embed/27v36t-3afQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## How It Works
 
@@ -39,20 +41,20 @@ To add another control plane (master) node, a user can run the following command
 ```
 kubeadm kubeadm join ${API_SERVER_PROXY_IP}:${API_SERVER_PROXY_PORT} \
     --experimental-control-plane \
-    --certificate-key=${ENCRYPTION_KEY}
+    --certificate-key=${ENCRYPTION_KEY} \
     --token ${KUBEADM_TOKEN} \
     --discovery-token-ca-cert-hash ${APISERVER_CA_CERT_HASH}
 ```
 
 ## Walkthrough: Creating the HA Control Plane
 
-This walkthrough will guide you to creating a new Kubernetes cluster with a 3 node control plane. It will demonstrate joining a control plane right after bootstrap and also how to add another control plane after the bootstrap tokens have expired.
+This walkthrough will guide you to creating a new Kubernetes cluster with a 3 node control plane. It will demonstrate joining a control plane right after bootstrap and how to add another control plane node after the bootstrap tokens have expired.
 
 1. Create 4 hosts (vms, baremetal, etc).
 
    > These hosts will be referred to as `loadbalancer`, `master0`, `master1`, and `master2`.
 
-    > master hosts may need 2 vCPUs and 2GB of RAM available. You can get around these requirements during testing by ignoring pre-flight checks. See the kubeadm documentation for more details.
+   > master hosts may need 2 vCPUs and 2GB of RAM available. You can get around these requirements during testing by ignoring pre-flight checks. See the kubeadm documentation for more details.
 
 1. Record the host IPs for later use.
 
