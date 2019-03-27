@@ -152,7 +152,7 @@ In this section, we'll run a simple NGINX load balancer to provide a single endp
     kind: ClusterConfiguration
     kubernetesVersion: stable
     # REPLACE with `loadbalancer` IP
-    controlPlaneEndpoint: "192.168.122.169:6443"
+    controlPlaneEndpoint: "192.168.122.170:6443"
     networking:
       podSubnet: 192.168.0.0/18
     ```
@@ -174,7 +174,7 @@ In this section, we'll run a simple NGINX load balancer to provide a single endp
     ```
     You can now join any number of the control-plane node running the following command on each as root:
 
-    kubeadm join 192.168.122.169:6443 --token nmiqmn.yls76lcyxg2wt36c \
+    kubeadm join 192.168.122.170:6443 --token nmiqmn.yls76lcyxg2wt36c \
     --discovery-token-ca-cert-hash sha256:5efac16c86e5f2ed6b20c6dbcbf3a9daa5bf75aa604097dbf49fdc3d1fd5ff7d \
     --experimental-control-plane --certificate-key 828fc83b950fca2c3bda129bcd0a4ffcd202cfb1a30b36abb901de1a3626a9df
     ```
@@ -267,7 +267,7 @@ In this section, we'll run a simple NGINX load balancer to provide a single endp
 2. Run the recording join command from the previous section.
 
     ```
-    kubeadm join 192.168.122.169:6443 --token nmiqmn.yls76lcyxg2wt36c \
+    kubeadm join 192.168.122.170:6443 --token nmiqmn.yls76lcyxg2wt36c \
     --discovery-token-ca-cert-hash sha256:5efac16c86e5f2ed6b20c6dbcbf3a9daa5bf75aa604097dbf49fdc3d1fd5ff7d \
     --experimental-control-plane \
     --certificate-key 828fc83b950fca2c3bda129bcd0a4ffcd202cfb1a30b36abb901de1a3626a9df
@@ -372,7 +372,6 @@ This section joins the third and final master. However, we will first delete all
         --certificate-key 9555b74008f24687eb964bd90a164ecb5760a89481d9c55a77c129b7db438168 \
         --token xaw58o.0fjg0xp0ohpucwhr \
         --discovery-token-ca-cert-hash sha256:5efac16c86e5f2ed6b20c6dbcbf3a9daa5bf75aa604097dbf49fdc3d1fd5ff7d
-
     ```
 
 3. After completion, verify there are now 3 nodes.
