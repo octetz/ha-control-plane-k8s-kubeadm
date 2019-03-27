@@ -141,7 +141,7 @@ In this section, we'll run a simple NGINX load balancer to provide a single endp
     mkdir /etc/kubernetes/kubeadm
     ```
 
-1. Create an edit the file `/etc/kubernetes/kubeadm/kubeadm-config.yaml`.
+1. Create and edit the file `/etc/kubernetes/kubeadm/kubeadm-config.yaml`.
 
     ```
     vim /etc/kubernetes/kubeadm/kubeadm-config.yaml
