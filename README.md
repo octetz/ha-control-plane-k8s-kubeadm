@@ -39,7 +39,7 @@ Lastly, it is important to note the token generated during `upload-certs` is onl
 To add another control plane (master) node, a user can run the following command.
 
 ```
-kubeadm kubeadm join ${API_SERVER_PROXY_IP}:${API_SERVER_PROXY_PORT} \
+kubeadm join ${API_SERVER_PROXY_IP}:${API_SERVER_PROXY_PORT} \
     --experimental-control-plane \
     --certificate-key=${ENCRYPTION_KEY} \
     --token ${KUBEADM_TOKEN} \
