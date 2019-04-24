@@ -1,8 +1,18 @@
+---
+title: Highly Available Control Plane with kubeadm 1.14+
+header-includes:
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="joshrosso.com" />
+    <meta name="twitter:title" content="Highly Available Control Plane with kubeadm 1.14+" />
+    <meta name="twitter:description" content="A look at bootstrapping HA control planes with new features in 1.14+." />
+    <meta name="twitter:image" content="https://joshrosso.com/images/ha-cp.png" />
+---
+
 # Highly Available Control Plane with kubeadm 1.14+
 
 Kubernetes 1.14 introduced an [ALPHA](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#kubeadm-maturity) feature for dynamically adding master nodes to a cluster. This prevents the need to copy certificates and keys among nodes relieving additional orchestration and complexity in the bootstrapping process. In this post we will dive into how it works.
 
-<iframe width="800" height="450" src="https://www.youtube.com/embed/27v36t-3afQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<center><iframe width="800" height="450" src="https://www.youtube.com/embed/27v36t-3afQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
 
 ## How It Works
 
